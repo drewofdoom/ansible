@@ -112,8 +112,11 @@
         - src: files/etc/security/limits.d/realtime.conf
           dest: /etc/security/limits.d/realtime.conf
           mode: u=rw,go=r
-        - src: files/etc/udev/rules.d/50-presonus-audio.conf
-          dest: /etc/udev/rules.d/50-presonus-audio.conf
+        - src: files/etc/udev/rules.d/50-presonus-audio.rules
+          dest: /etc/udev/rules.d/50-presonus-audio.rules
+          mode: u=rw,go=r
+        - src: files/etc/udev/rules.d/50-qmk.rules
+          dest: /etc/udev/rules.d/50-qmk.rules
           mode: u=rw,go=r
       ansible.builtin.copy:
         src: "{{ item.src }}"
