@@ -1,0 +1,37 @@
+---
+- name: Deploy user configuration files
+  loop:
+    - src: files/bashrc
+      dest: /home/drew/.bashrc
+      mode: u=rw,go=r
+    - src: files/config/starship.toml
+      dest: /home/drew/.config/starship.toml
+      mode: u=rw,go=r
+    - src: files/config/brave-flags.conf
+      dest: /home/drew/.config/brave-flags.conf
+      mode: u=rw,go=r
+    - src: files/config/pipewire
+      dest: /home/drew/.config/pipewire
+      mode: u=rw,go=r
+  ansible.builtin.copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: drew
+    group: drew
+    mode: "{{ item.mode }}"
+
+- name: Install flatpaks
+  community.general.flatpak:
+    name:
+      - org.deskflow.deskflow
+      - io.github.nokse22.high-tide
+      - org.pipewire.Helvum
+      - org.telegram.desktop
+      - com.slack.Slack
+      - com.saivert.pwvucontrol
+      - me.proton.Pass
+      - me.proton.Mail
+      - com.protonvpn.www
+      - org.gnome.Extensions
+      - com.usebottles.bottles
+...

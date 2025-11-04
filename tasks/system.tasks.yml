@@ -1,0 +1,140 @@
+- name: Run as root
+  become: true
+  become_method: community.general.sudosu
+  block:
+    - name: Set hostname
+      ansible.builtin.hostname:
+        name: cernan
+
+    - name: Install RPM keys
+      loop:
+        - https://packages.microsoft.com/keys/microsoft.asc
+        - https://pkgs.tailscale.com/stable/fedora/repo.gpg
+        - /usr/share/distribution-gpg-keys/rpmfusion/RPM-GPG-KEY-rpmfusion-free-fedora-{{ ansible_distribution_major_version }}
+        - /usr/share/distribution-gpg-keys/rpmfusion/RPM-GPG-KEY-rpmfusion-nonfree-fedora-{{ ansible_distribution_major_version }}
+      ansible.builtin.rpm_key:
+        key: "{{ item }}"
+
+    - name: Install repositories from repo files
+      loop:
+        - https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo
+        - https://pkgs.tailscale.com/stable/fedora/tailscale.repo
+      ansible.builtin.get_url:
+        url: "{{ item }}"
+        dest: /etc/yum.repos.d/
+        owner: root
+        group: root
+        mode: u=rw,go=r
+
+    - name: Write repositories as files manually
+      loop:
+        - name: code
+          description: Visual Studio Code
+          baseurl: https://packages.microsoft.com/yumrepos/vscode
+          gpgcheck: true
+          enabled: true
+      loop_control:
+        label: "{{ item.description }}"
+      ansible.builtin.yum_repository:
+        name: "{{ item.name }}"
+        description: "{{ item.description }}"
+        baseurl: "{{ item.baseurl }}"
+        gpgcheck: "{{ item.gpgcheck }}"
+        enabled: "{{ item.enabled }}"
+
+    - name: Install repositories from RPM packages
+      ansible.builtin.dnf5:
+        name:
+          - https://mirror.fcix.net/rpmfusion/free/fedora/rpmfusion-free-release-{{ ansible_distribution_major_version }}.noarch.rpm
+          - https://mirror.fcix.net/rpmfusion/nonfree/fedora/rpmfusion-nonfree-release-{{ ansible_distribution_major_version }}.noarch.rpm
+
+    - name: Enable COPR repositories
+      loop:
+        - atim/starship
+        # - patrickl/wine-tkg
+      community.general.copr:
+        host: copr.fedorainfracloud.org
+        name: "{{ item }}"
+        state: enabled
+
+    - name: Install base packages
+      become: true
+      become_method: community.general.sudosu
+      ansible.builtin.dnf5:
+        name:
+          # nVidia
+          - akmod-nvidia
+          - xorg-x11-drv-nvidia-cuda-libs
+          - xorg-x11-drv-nvidia-power
+          - vulkan
+          - vulkan-tools
+          - libva-utils
+          - vdpauinfo
+          # system
+          - tailscale
+          - realtime-setup
+          - xdg-utils
+          - libxcb
+          - gdk-pixbuf2-modules-extra
+          - libappindicator-gtk3
+          - libdbusmenu
+          - libdbusmenu-gtk3
+          # fonts
+          - cascadia-mono-nf-fonts
+          - cascadia-code-nf-fonts
+          - fontawesome-fonts-all
+          # applications
+          - code
+          - brave-browser
+          - gh
+          - starship
+          # gaming
+          - steam
+          - gamescope
+          - gamemode
+
+    - name: Assign myself to groups
+      become: true
+      become_method: community.general.sudosu
+      ansible.builtin.user:
+        name: drew
+        append: true
+        groups:
+          - realtime
+          - pipewire
+          - audio
+          - video
+
+    - name: Deploy system configuration files
+      become: true
+      become_method: community.general.sudosu
+      loop:
+        - src: files/etc/security/limits.d/realtime.conf
+          dest: /etc/security/limits.d/realtime.conf
+          mode: u=rw,go=r
+        - src: files/etc/udev/rules.d/50-presonus-audio.conf
+          dest: /etc/udev/rules.d/50-presonus-audio.conf
+          mode: u=rw,go=r
+      ansible.builtin.copy:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        owner: root
+        group: root
+        mode: "{{ item.mode }}"
+
+    - name: Enable tailscaled
+      ansible.builtin.systemd_service:
+        name: tailscaled
+        state: started
+        enabled: true
+
+    - name: Enable nvidia suspend services
+      loop:
+        - suspend
+        - resume
+        - hibernate
+      ansible.builtin.systemd_service:
+        name: nvidia-{{ item }}
+        enabled: true
+
+...
