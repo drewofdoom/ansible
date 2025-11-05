@@ -112,17 +112,20 @@
         - src: files/etc/security/limits.d/realtime.conf
           dest: /etc/security/limits.d/realtime.conf
           mode: u=rw,go=r
-        - src: files/etc/udev/rules.d/50-presonus-audio.rules
-          dest: /etc/udev/rules.d/50-presonus-audio.rules
+        - src: files/etc/udev/rules.d/40-presonus-audio.rules
+          dest: /etc/udev/rules.d/40-presonus-audio.rules
           mode: u=rw,go=r
         - src: files/etc/udev/rules.d/50-qmk.rules
           dest: /etc/udev/rules.d/50-qmk.rules
           mode: u=rw,go=r
+        - src: files/etc/udev/rules.d/51-keychron.rules
+          dest: /etc/udev/rules.d/51-keychron.rules
+          mode: u=rw,go=r
+        - src: files/etc/udev/rules.d/52-ploopy.rules
+          dest: /etc/udev/rules.d/52-ploopy.rules
+          mode: u=rw,go=r
         - src: files/etc/udev/rules.d/99-touchscreen-map.rules
           dest: /etc/udev/rules.d/99-touchscreen-map.rules
-          mode: u=rw,go=r
-        - src: files/etc/udev/rules.d/50-ploopy.rules
-          dest: /etc/udev/rules.d/50-ploopy.rules
           mode: u=rw,go=r
       ansible.builtin.copy:
         src: "{{ item.src }}"
