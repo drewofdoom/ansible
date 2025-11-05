@@ -35,4 +35,6 @@
       - com.protonvpn.www
       - org.gnome.Extensions
       - com.usebottles.bottles
+      - com.github.iwalton3.jellyfin-media-player
+      - tv.plex.PlexDesktop
 ...
