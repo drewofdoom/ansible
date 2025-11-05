@@ -27,6 +27,7 @@
       - io.github.nokse22.high-tide
       - org.pipewire.Helvum
       - org.telegram.desktop
+      - com.discordapp.Discord
       - com.slack.Slack
       - com.saivert.pwvucontrol
       - me.proton.Pass
