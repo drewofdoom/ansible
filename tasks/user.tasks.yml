@@ -23,13 +23,17 @@
 - name: Install flatpaks
   community.general.flatpak:
     name:
-      - org.deskflow.deskflow
-      - io.github.nokse22.high-tide
-      - org.pipewire.Helvum
+      # social
+      - org.gnome.Fractal
       - org.telegram.desktop
       - com.discordapp.Discord
       - com.slack.Slack
+      # media
+      - io.github.nokse22.high-tide
+      - org.pipewire.Helvum
       - com.saivert.pwvucontrol
+      # utility
+      - org.deskflow.deskflow
       - me.proton.Pass
       - me.proton.Mail
       - com.protonvpn.www
