@@ -1,0 +1,2 @@
+ Set the persistent ID matching, the output display, and the precise calibration matrix.
+ACTION=="add|change", SUBSYSTEM=="input", ENV{ID_VENDOR_ID}=="0712", ENV{ID_MODEL_ID}=="000a", ENV{LIBINPUT_CALIBRATION_OUTPUT}="HDMI-1", ENV{LIBINPUT_CALIBRATION_MATRIX}="0.37500 0 0.31367 0 0.42857 0.57143"

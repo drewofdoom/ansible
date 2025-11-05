@@ -118,6 +118,9 @@
         - src: files/etc/udev/rules.d/50-qmk.rules
           dest: /etc/udev/rules.d/50-qmk.rules
           mode: u=rw,go=r
+        - src: files/etc/udev/rules.d/99-touchscreen-map.rules
+          dest: /etc/udev/rules.d/99-touchscreen-map.rules
+          mode: u=rw,go=r
         - src: files/etc/udev/rules.d/50-ploopy.rules
           dest: /etc/udev/rules.d/50-ploopy.rules
           mode: u=rw,go=r
