@@ -17,6 +17,8 @@
 - name: Install flatpaks
   community.general.flatpak:
     name:
+      # browser
+      - app.zen_browser.zen
       # social
       - org.gnome.Fractal
       - org.telegram.desktop
@@ -26,6 +28,8 @@
       - io.github.nokse22.high-tide
       - org.pipewire.Helvum
       - com.saivert.pwvucontrol
+      - tv.plex.PlexDesktop
+      - com.github.iwalton3.jellyfin-media-player
       # utility
       - org.deskflow.deskflow
       - me.proton.Pass
@@ -33,6 +37,4 @@
       - com.protonvpn.www
       - org.gnome.Extensions
       - com.usebottles.bottles
-      - com.github.iwalton3.jellyfin-media-player
-      - tv.plex.PlexDesktop
 ...
