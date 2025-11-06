@@ -109,23 +109,11 @@
       become: true
       become_method: community.general.sudosu
       loop:
-        - src: files/etc/security/limits.d/realtime.conf
-          dest: /etc/security/limits.d/realtime.conf
+        - src: files/etc/security/limits.d/
+          dest: /etc/security/limits.d/
           mode: u=rw,go=r
-        - src: files/etc/udev/rules.d/40-presonus-audio.rules
-          dest: /etc/udev/rules.d/40-presonus-audio.rules
-          mode: u=rw,go=r
-        - src: files/etc/udev/rules.d/50-qmk.rules
-          dest: /etc/udev/rules.d/50-qmk.rules
-          mode: u=rw,go=r
-        - src: files/etc/udev/rules.d/51-keychron.rules
-          dest: /etc/udev/rules.d/51-keychron.rules
-          mode: u=rw,go=r
-        - src: files/etc/udev/rules.d/52-ploopy.rules
-          dest: /etc/udev/rules.d/52-ploopy.rules
-          mode: u=rw,go=r
-        - src: files/etc/udev/rules.d/99-touchscreen-map.rules
-          dest: /etc/udev/rules.d/99-touchscreen-map.rules
+        - src: files/etc/udev/rules.d/
+          dest: /etc/udev/rules.d/
           mode: u=rw,go=r
       ansible.builtin.copy:
         src: "{{ item.src }}"

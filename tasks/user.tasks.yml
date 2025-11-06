@@ -4,13 +4,7 @@
     - src: files/bashrc
       dest: /home/drew/.bashrc
       mode: u=rw,go=r
-    - src: files/config/starship.toml
-      dest: /home/drew/.config/starship.toml
-      mode: u=rw,go=r
-    - src: files/config/brave-flags.conf
-      dest: /home/drew/.config/brave-flags.conf
-      mode: u=rw,go=r
-    - src: files/config/pipewire
+    - src: files/config/
       dest: /home/drew/.config/
       mode: u=rw,go=r
   ansible.builtin.copy:
