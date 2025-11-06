@@ -3,9 +3,6 @@
   hosts: localhost
   connection: local
   tasks:
-    - name: Run system tasks
+    - name: System configs
       ansible.builtin.include_tasks: tasks/system.tasks.yml
-
-    - name: Run user tasks
-      ansible.builtin.include_tasks: tasks/user.tasks.yml
 ...

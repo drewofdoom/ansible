@@ -1,0 +1,8 @@
+---
+- name: Base configurations
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: User configs
+      ansible.builtin.include_tasks: tasks/user_config.tasks.yml
+...

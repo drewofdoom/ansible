@@ -1,0 +1,53 @@
+---
+- name: Run as root
+  become: true
+  become_method: community.general.sudosu
+  block:
+    - name: Set hostname
+      ansible.builtin.hostname:
+        name: cernan
+
+    - name: Assign myself to groups
+      become: true
+      become_method: community.general.sudosu
+      ansible.builtin.user:
+        name: drew
+        append: true
+        groups:
+          - realtime
+          - pipewire
+          - audio
+          - video
+
+    - name: Deploy system configuration files
+      become: true
+      become_method: community.general.sudosu
+      loop:
+        - src: files/etc/security/limits.d/
+          dest: /etc/security/limits.d/
+          mode: u=rw,go=r
+        - src: files/etc/udev/rules.d/
+          dest: /etc/udev/rules.d/
+          mode: u=rw,go=r
+      ansible.builtin.copy:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        owner: root
+        group: root
+        mode: "{{ item.mode }}"
+
+    - name: Enable tailscaled
+      ansible.builtin.systemd_service:
+        name: tailscaled
+        state: started
+        enabled: true
+
+    - name: Enable nvidia suspend services
+      loop:
+        - suspend
+        - resume
+        - hibernate
+      ansible.builtin.systemd_service:
+        name: nvidia-{{ item }}
+        enabled: true
+...

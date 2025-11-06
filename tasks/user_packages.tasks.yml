@@ -1,19 +1,4 @@
 ---
-- name: Deploy user configuration files
-  loop:
-    - src: files/bashrc
-      dest: /home/drew/.bashrc
-      mode: u=rw,go=r
-    - src: files/config/
-      dest: /home/drew/.config/
-      mode: u=rw,go=r
-  ansible.builtin.copy:
-    src: "{{ item.src }}"
-    dest: "{{ item.dest }}"
-    owner: drew
-    group: drew
-    mode: "{{ item.mode }}"
-
 - name: Install flatpaks
   community.general.flatpak:
     name:

@@ -1,0 +1,17 @@
+---
+- name: Base configurations
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: System configs
+      ansible.builtin.include_tasks: tasks/system.tasks.yml
+
+    - name: Install system packages
+      ansible.builtin.include_tasks: tasks/system_packages.tasks.yml
+
+    - name: User configs
+      ansible.builtin.include_tasks: tasks/user_config.tasks.yml
+
+    - name: Install user packages
+      ansible.builtin.include_tasks: tasks/user_config.tasks.yml
+...
