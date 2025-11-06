@@ -1,3 +1,4 @@
+# code: language=ansible
 ---
 - name: Deploy user configuration files
   loop:
