@@ -5,5 +5,5 @@
   connection: local
   tasks:
     - name: System configs
-      ansible.builtin.include_tasks: tasks/system.tasks.yml
+      ansible.builtin.include_tasks: tasks/system_config.tasks.yml
 ...
