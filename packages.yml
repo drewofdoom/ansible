@@ -1,0 +1,16 @@
+# code: language=ansible
+---
+- name: Install all packages
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+    - name: Install system packages
+      ansible.builtin.include_tasks: tasks/system_packages.yml
+
+    - name: Install audio plugins
+      ansible.builtin.include_tasks: tasks/audio_packages.yml
+
+    - name: Install user packages
+      ansible.builtin.include_tasks: tasks/user_packages.yml
+...

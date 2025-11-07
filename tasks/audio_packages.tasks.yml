@@ -1,0 +1,29 @@
+# code: language=ansible
+---
+- name: Run as root
+  become: true
+  become_method: community.general.sudosu
+  block:
+    - name: Install audio packages from repos
+      ansible.builtin.dnf5:
+        name:
+          # LV2 plugins
+          - lv2-vocoder-plugins
+          - lv2-zynadd-plugins
+          - lv2-x42-plugins
+          - lv2-swh-plugins
+          - lv2-ll-plugins
+          - lv2-ir-plugins
+          - lv2-guitarix-plugins
+          - lv2-mdala-plugins
+          - lv2-mdaEPiano
+          - lv2-calf-plugins-gui
+          - lv2-bankstown
+          - lv2-amsynth-plugin
+          - lv2-carla
+          # CLAP Plugins
+          - clap-zam-plugins
+          - lsp-plugins-clap
+          # Applications
+          - Carla
+...
